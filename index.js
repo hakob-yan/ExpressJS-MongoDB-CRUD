@@ -17,16 +17,16 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.get('/', async (req, res) => {
     // res.sendFile(path.resolve(__dirname, 'pages/index.html'))
     const blogposts = await BlogPost.find({});
-    console.log(blogposts);
     res.render('index', { blogposts })
-
+    
 })
 app.get('/posts/new', (req, res) => {
     res.render('create')
 })
 app.get('/post/:id', async (req, res) => {
     const blogpost = await BlogPost.findById(req.params.id);
-    res.render('/post', { blogpost })
+    console.log(blogpost);
+    res.render('post', { blogpost })
 })
 app.get('/about', (req, res) => {
     // res.sendFile(path.resolve(__dirname, 'pages/about.html'))
@@ -46,7 +46,6 @@ app.get('/post', (req, res) => {
 
 
 app.post('/posts/store', async (req, res) => {
-    console.log(req.body);
     await BlogPost.create(req.body);
     res.redirect('/')
 })
